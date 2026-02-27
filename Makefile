@@ -23,6 +23,38 @@ help:
 	$(info Creates a local cluster using Kind (Kubernetes in Docker))
 	$(info Usage: make <target>)
 	$(info )
+	$(info Available targets:)
+	$(info - create-cluster-ambient:  creates the cluster with Istio Ambient mode enabled)
+	$(info - destroy-cluster-ambient: deletes the cluster with Istio Ambient mode enabled)
+	$(info )
+	$(info - create-cluster-sidecar:  creates the cluster with Istio Sidecar mode enabled)
+	$(info - destroy-cluster-sidecar: deletes the cluster with Istio Sidecar mode enabled)
+
+.PHONY: create-cluster-ambient
+create-cluster-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/vind-with-istio-ambient
+create-cluster-ambient: init
+create-cluster-ambient: apply
+create-cluster-ambient: ## Creates a local cluster with Istio Ambient mode enabled
+	@echo "Created the cluster with Istio Ambient mode"
+
+.PHONY: destroy-cluster-ambient
+destroy-cluster-ambient: export WORKING_PATH=$(ROOT_DIR)/examples/vind-with-istio-ambient
+destroy-cluster-ambient: destroy
+destroy-cluster-ambient: ## Destroys a previously created local cluster with Istio Ambient mode enabled
+	@echo "Destroyed the cluster with Istio Ambient mode"
+
+.PHONY: create-cluster-sidecar
+create-cluster-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/vind-with-istio-legacy
+create-cluster-sidecar: init
+create-cluster-sidecar: apply
+create-cluster-sidecar: ## Creates a local cluster with Istio Sidecar mode enabled
+	@echo "Created the cluster with Istio Sidecar mode"
+
+.PHONY: destroy-cluster-sidecar
+destroy-cluster-sidecar: export WORKING_PATH=$(ROOT_DIR)/examples/vind-with-istio-legacy
+destroy-cluster-sidecar: destroy
+destroy-cluster-sidecar: ## Destroys a previously created local cluster with Istio Sidecar mode enabled
+	@echo "Destroyed the cluster with Istio Sidecar mode"
 
 .PHONY: fmt
 fmt: ## Performs auto-formatting of the code
@@ -56,5 +88,6 @@ apply: ## Applies the terraform/tofu configuration
 destroy: ## Destroys the cluster and removes the config file
 	cd $(WORKING_PATH)
 	$(TF_BIN) destroy -auto-approve
-	rm -f local-cluster-config || echo "File not found, skipping"
+	rm -f kindconfig || echo "File not found, skipping"
 	cd -
+
