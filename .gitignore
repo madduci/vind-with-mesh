@@ -9,3 +9,4 @@
 *.lock.hcl
 local-cluster-config
 kubeconfig*
+values.yaml

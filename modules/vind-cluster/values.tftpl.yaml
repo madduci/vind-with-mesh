@@ -21,6 +21,10 @@ privateNodes:
     nodeToNode:
       enabled: true
 %{ endif ~}
+deploy:
+  cni:
+    flannel:
+      enabled: ${enable_default_cni}
 telemetry:
   enabled: ${enable_telemetry}
 experimental:

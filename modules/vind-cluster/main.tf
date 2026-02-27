@@ -7,62 +7,61 @@ resource "local_file" "configuration" {
     kubernetes_version   = var.kubernetes_version,
     enable_telemetry     = var.enable_telemetry,
     enable_private_nodes = var.enable_private_nodes,
+    enable_default_cni   = var.enable_default_cni,
     docker_nodes = [
       for i in range(var.worker_nodes) :
       "worker-${i + 1}"
     ]
   })
-  filename = "${path.module}/values.yaml"
+  filename = "${path.root}/values.yaml"
 }
 
-resource "terraform_data" "vind_cluster" {
-  input = {
-    cluster_name = var.cluster_name
-  }
-
+resource "terraform_data" "vind_cluster_apply" {
   triggers_replace = {
-    config_change = local_file.configuration.content_sha256
+    config_change        = local_file.configuration.content_sha256
+    kubeconfig_save_path = var.kubeconfig_save_path
   }
 
   provisioner "local-exec" {
     command = <<EOT
-      echo "#### Creating a new vCluster with vind:" && \
-      vcluster create ${var.cluster_name} -f "${path.module}/values.yaml" --upgrade && \
-      echo "#### vCluster ${var.cluster_name} created successfully"
+      echo "#### Creating/upgrading vCluster with vind:" && \
+      vcluster create ${var.cluster_name} -f "${path.root}/values.yaml" --upgrade && \
+      vcluster connect ${var.cluster_name} --print > ${var.kubeconfig_save_path} && \
+      echo "#### vCluster ${var.cluster_name} ready"
     EOT
+  }
+}
+
+resource "terraform_data" "vind_cluster_destroy" {
+  input = {
+    cluster_name         = var.cluster_name
+    kubeconfig_save_path = var.kubeconfig_save_path
+  }
+
+  lifecycle {
+    ignore_changes = [input]
   }
 
   provisioner "local-exec" {
     when    = destroy
     command = <<EOT
-      echo "#### Destroying the vCluster with vind:" && \
+      echo "#### Destroying vCluster with vind:" && \
       vcluster delete ${self.input.cluster_name} && \
-      echo "#### vCluster ${self.input.cluster_name} destroyed successfully"
+      rm -f ${self.input.kubeconfig_save_path} && \
+      echo "#### Cleanup completed"
     EOT
   }
 }
 
 resource "terraform_data" "kubeconfig" {
-  input = {
-    kubeconfig_save_path = var.kubeconfig_save_path
-  }
-
   triggers_replace = {
-    config_change = local_file.configuration.content_sha256
+    kubeconfig_path = var.kubeconfig_save_path
   }
 
-  provisioner "local-exec" {
-    command = <<EOT
-      vcluster connect ${var.cluster_name} --print > ${var.kubeconfig_save_path} && echo "#### Kubeconfig saved to ${var.kubeconfig_save_path}"
-    EOT
+  lifecycle {
+    ignore_changes = [triggers_replace]
   }
 
-  provisioner "local-exec" {
-    when    = destroy
-    command = <<EOT
-      rm -f ${self.input.kubeconfig_save_path} && echo "#### Kubeconfig ${self.input.kubeconfig_save_path} destroyed successfully"
-    EOT
-  }
+  depends_on = [terraform_data.vind_cluster_apply]
 
-  depends_on = [terraform_data.vind_cluster]
 }
