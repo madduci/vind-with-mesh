@@ -1,0 +1,32 @@
+controlPlane:
+  advanced:
+    konnectivity:
+      agent:
+        enabled: false
+      server:
+        enabled: false
+  distro:
+    k8s:
+      version: ${kubernetes_version}
+  standalone:
+    enabled: true
+  service:
+    spec:
+      type: LoadBalancer
+%{ if enable_private_nodes == true ~}
+privateNodes:
+  enabled: true
+  vpn:
+    enabled: true
+    nodeToNode:
+      enabled: true
+%{ endif ~}
+telemetry:
+  enabled: ${enable_telemetry}
+experimental:
+  docker:
+    enabled: true
+    nodes:
+    %{~ for node in docker_nodes ~}
+      - name: "${node}"
+    %{~ endfor ~}
