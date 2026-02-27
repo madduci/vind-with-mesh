@@ -1,7 +1,7 @@
 module "vind_cluster" {
   source               = "../../modules/vind-cluster"
   cluster_name         = "local-cluster-istio"
-  worker_nodes         = 1
+  worker_nodes         = 3
   kubeconfig_save_path = "./kubeconfig"
 
   enable_default_cni = true
