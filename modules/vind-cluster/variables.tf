@@ -49,3 +49,9 @@ variable "enable_private_nodes" {
   default     = false
   description = "Enable private nodes for the cluster. Requires Platform to be enabled"
 }
+
+variable "enable_default_cni" {
+  type        = bool
+  default     = true
+  description = "Enable the default CNI (Flannel) for the cluster. Consider disabling this, if you want to use a different CNI plugin"
+}

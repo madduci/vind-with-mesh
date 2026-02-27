@@ -1,6 +1,6 @@
 output "kubeconfig_path" {
   description = "Path to the kubeconfig file"
-  value       = var.kubeconfig_save_path
+  value       = data.local_sensitive_file.kubeconfig.filename
 }
 
 output "name" {

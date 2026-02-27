@@ -34,14 +34,15 @@ No modules.
 | Name | Type |
 |------|------|
 | [local_file.configuration](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
-| [terraform_data.kubeconfig](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
-| [terraform_data.vind_cluster](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.vind_cluster_apply](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.vind_cluster_destroy_hook](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Defines the name of the cluster | `string` | `"local-cluster"` | no |
+| <a name="input_enable_default_cni"></a> [enable\_default\_cni](#input\_enable\_default\_cni) | Enable the default CNI (Flannel) for the cluster. Consider disabling this, if you want to use a different CNI plugin | `bool` | `true` | no |
 | <a name="input_enable_private_nodes"></a> [enable\_private\_nodes](#input\_enable\_private\_nodes) | Enable private nodes for the cluster. Requires Platform to be enabled | `bool` | `false` | no |
 | <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry) | Enable telemetry for the cluster | `bool` | `false` | no |
 | <a name="input_kubeconfig_save_path"></a> [kubeconfig\_save\_path](#input\_kubeconfig\_save\_path) | Defines the path to save the kubeconfig file | `string` | `"kubeconfig"` | no |
