@@ -45,7 +45,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_enable_ambient_mode"></a> [enable\_ambient\_mode](#input\_enable\_ambient\_mode) | Whether to enable ambient mode for the Istio Mesh | `bool` | `false` | no |
 | <a name="input_helm_repository"></a> [helm\_repository](#input\_helm\_repository) | Helm Chart Repository URL | `string` | `"https://istio-release.storage.googleapis.com/charts"` | no |
-| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Istio Helm Chart to be installed | `string` | `"1.28.3"` | no |
+| <a name="input_helm_version"></a> [helm\_version](#input\_helm\_version) | The version of the Istio Helm Chart to be installed | `string` | `"1.29.0"` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace where to install the services | `string` | `"istio-system"` | no |
 | <a name="input_replica_count"></a> [replica\_count](#input\_replica\_count) | The number of replicas that have to be configured for the services | `number` | `3` | no |
 | <a name="input_trace_sampling"></a> [trace\_sampling](#input\_trace\_sampling) | The sampling rate option can be used to control what percentage of requests get reported to your tracing system. (https://istio.io/latest/docs/tasks/observability/distributed-tracing/mesh-and-proxy-config/#customizing-trace-sampling) | `string` | `"1.0"` | no |

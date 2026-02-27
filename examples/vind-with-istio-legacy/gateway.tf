@@ -8,7 +8,7 @@ resource "kubernetes_namespace_v1" "ingress" {
 }
 
 # Wait for the cluster to be ready
-resource "terraform_data" "gateway_apply" {
+resource "terraform_data" "gateway_deploy" {
   input = {
     kubeconfig_path  = module.vind_cluster.kubeconfig_path
     gateway_yaml     = "${path.root}/gateway.yaml"
@@ -50,5 +50,5 @@ resource "terraform_data" "gateway_destroy" {
     }
   }
 
-  depends_on = [module.istio]
+  depends_on = [terraform_data.gateway_deploy]
 }

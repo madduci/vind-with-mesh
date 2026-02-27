@@ -11,7 +11,7 @@ module "gateway" {
   source          = "../../modules/gateway_api"
   kubeconfig_path = module.vind_cluster.kubeconfig_path
 
-  depends_on = [module.vind_cluster.kubeconfig_path]
+  depends_on = [module.vind_cluster]
 }
 
 module "istio" {

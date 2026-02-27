@@ -12,7 +12,7 @@ resource "kubernetes_namespace_v1" "workshop" {
 
 # Wait for the cluster to be ready
 resource "terraform_data" "example_deploy" {
-  depends_on = [kubernetes_namespace_v1.workshop, terraform_data.gateway_apply]
+  depends_on = [kubernetes_namespace_v1.workshop, terraform_data.gateway_deploy]
   input = {
     kubeconfig_path  = module.vind_cluster.kubeconfig_path
     example_yaml     = "${path.root}/example.yaml"
@@ -52,5 +52,5 @@ resource "terraform_data" "example_destroy" {
     }
   }
 
-  depends_on = [module.istio]
+  depends_on = [terraform_data.example_deploy]
 }
