@@ -54,5 +54,7 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_istio_ingress_id"></a> [istio\_ingress\_id](#output\_istio\_ingress\_id) | The Id of the Istio Ingress Gateway service |
 <!-- END_TF_DOCS -->

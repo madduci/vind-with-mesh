@@ -1,6 +1,6 @@
 output "kubeconfig_path" {
   description = "Path to the kubeconfig file"
-  value       = data.local_sensitive_file.kubeconfig.filename
+  value       = terraform_data.kubeconfig.triggers_replace.kubeconfig_path
 }
 
 output "name" {

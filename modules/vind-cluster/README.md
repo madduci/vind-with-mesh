@@ -34,8 +34,9 @@ No modules.
 | Name | Type |
 |------|------|
 | [local_file.configuration](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
+| [terraform_data.kubeconfig](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [terraform_data.vind_cluster_apply](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
-| [terraform_data.vind_cluster_destroy_hook](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
+| [terraform_data.vind_cluster_destroy](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 
 ## Inputs
 

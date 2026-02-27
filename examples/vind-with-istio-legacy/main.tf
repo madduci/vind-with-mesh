@@ -18,5 +18,5 @@ module "istio" {
   source     = "../../modules/istio-mesh"
   depends_on = [module.gateway]
 
-  enable_ambient_mode = true
+  enable_ambient_mode = false
 }

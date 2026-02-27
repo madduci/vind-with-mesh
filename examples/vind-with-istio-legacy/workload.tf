@@ -51,4 +51,6 @@ resource "terraform_data" "example_destroy" {
       "KUBECONFIG" = self.input.kubeconfig_path
     }
   }
+
+  depends_on = [module.istio]
 }

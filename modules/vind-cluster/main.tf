@@ -32,7 +32,7 @@ resource "terraform_data" "vind_cluster_apply" {
   }
 }
 
-resource "terraform_data" "vind_cluster_destroy_hook" {
+resource "terraform_data" "vind_cluster_destroy" {
   input = {
     cluster_name         = var.cluster_name
     kubeconfig_save_path = var.kubeconfig_save_path
@@ -51,13 +51,17 @@ resource "terraform_data" "vind_cluster_destroy_hook" {
       echo "#### Cleanup completed"
     EOT
   }
-
-  depends_on = [terraform_data.vind_cluster_apply]
 }
 
+resource "terraform_data" "kubeconfig" {
+  triggers_replace = {
+    kubeconfig_path = var.kubeconfig_save_path
+  }
 
-data "local_sensitive_file" "kubeconfig" {
-  filename = var.kubeconfig_save_path
+  lifecycle {
+    ignore_changes = [triggers_replace]
+  }
 
   depends_on = [terraform_data.vind_cluster_apply]
+
 }

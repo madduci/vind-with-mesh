@@ -39,6 +39,4 @@ resource "terraform_data" "gateway_api_destroy" {
       "KUBECONFIG" = self.input.kubeconfig_path
     }
   }
-
-  depends_on = [terraform_data.gateway_api_deploy]
 }

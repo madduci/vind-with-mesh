@@ -160,6 +160,10 @@ data "kubernetes_service_v1" "istio_ingress" {
   depends_on = [helm_release.istio_ingressgateway]
 }
 
+locals {
+  istio_ingress_id = var.enable_ambient_mode ? "" : data.kubernetes_service_v1.istio_ingress[0].id
+}
+
 resource "helm_release" "istio_ztunnel" {
   count = var.enable_ambient_mode ? 1 : 0
 
